@@ -1,0 +1,6 @@
+pipecatcloud
+-e pipecat-march-openai[cartesia,openai,silero,deepgram,daily]
+fastapi
+uvicorn
+python-dotenv
+aiohttp
