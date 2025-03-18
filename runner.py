@@ -10,6 +10,7 @@ import time
 from typing import Optional
 
 import aiohttp
+from loguru import logger
 from pipecat.transports.services.helpers.daily_rest import (
     DailyRESTHelper,
     DailyRoomParams,
@@ -40,7 +41,6 @@ async def configure_with_args(
 
     args, unknown = parser.parse_known_args()
     key = args.apikey or os.getenv("DAILY_API_KEY")
-    print(f"key: {key}")
     daily_rest_helper = DailyRESTHelper(
         daily_api_key=key,
         daily_api_url=os.getenv("DAILY_API_URL", "https://api.daily.co/v1"),
@@ -75,5 +75,5 @@ async def configure_with_args(
     expiry_time: float = 60 * 60
 
     token = await daily_rest_helper.get_token(url, expiry_time)
-
+    logger.info(f"Daily room URL: {url}")
     return (url, token, args)
