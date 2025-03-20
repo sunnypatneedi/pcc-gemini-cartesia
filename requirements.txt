@@ -1,5 +1,5 @@
 pipecatcloud
--e pipecat-march-openai[cartesia,openai,silero,deepgram,daily]
+pipecat-ai[cartesia,openai,silero,deepgram,daily]~=0.0.59
 fastapi
 uvicorn
 python-dotenv
