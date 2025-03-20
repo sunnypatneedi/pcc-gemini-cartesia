@@ -1,6 +1,6 @@
 # OpenAI Realtime API Phone Bot
 
-A telephone-based conversational agent built with Pipecat, powered by OpenAI's Realtime API and Twilio. Ask it about NCAA basketball scores during March Madness!
+A telephone-based conversational agent built with Pipecat, powered by OpenAI's APIs and Twilio. Ask it about NCAA basketball scores during March Madness!
 
 ## Configuration
 
@@ -10,6 +10,12 @@ Rename the `env.example` file to `.env` and set the following:
 - `DAILY_API_KEY` Optional, but highly recommended. Enables easy Daily integration (see below). Get it from your Pipecat Cloud Dashboard: `https://pipecat.daily.co/<your-org-id>/settings/daily`
 
 You'll need a Docker Hub account to deploy. You'll also need a Twilio account if you want to call your bot.
+
+## Picking a Mode
+
+There are two botfiles in this repo. `bot-llm.py` uses the traditional STT to LLM to STT cascading flow. `bot-s2s.py` Uses the speech-to-speech model from the OpenAI Realtime API.
+
+The S2S model usually responds more quickly than the cascading flow. But the cascading approach gives you more control over how the bot operates. For example, OpenAI's new GPT-4o-powered transcription service allows you to prompt the transcriber to improve accuracy. In `bot-llm.py`, we're instructing the transcriber to listen for basketball-themed words. You also get the full power of the GPT-4o LLM and more configurable text-to-speech. It's worth trying both bots to see the differences.
 
 ## Deploying to Pipecat Cloud
 
@@ -21,6 +27,15 @@ Set up a local environment:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+```
+
+Choose which version of the bot you want to deploy:
+
+```bash
+# use s2s:
+cp bot-s2s.py bot.py
+# or use the cascading bot:
+cp bot-llm.py bot.py
 ```
 
 Build the docker image:
@@ -89,7 +104,7 @@ Pipecat uses [Transports](https://docs.pipecat.ai/server/base-classes/transport)
 If you've set `DAILY_API_KEY` in your `.env` file, you can run the bot locally in your Python environment with:
 
 ```bash
-python bot.py
+LOCAL_RUN=1 python bot.py # (or bot-llm.py or bot-s2s.py)
 ```
 
 If you look at the console output, you should see something like:
