@@ -160,7 +160,7 @@ async def main(args: SessionArguments):
         # Or set to False to disable openai turn detection and use transport VAD
         # turn_detection=False,
         input_audio_noise_reduction=InputAudioNoiseReduction(type="near_field"),
-        instructions="""You are a helpful and friendly AI assistant. 
+        instructions="""You are a helpful and friendly AI assistant. Your knowledge cutoff is 2023-10. 
 
 Act like a human, but remember that you aren't a human and that you can't do human
 things in the real world. Your voice and personality should be warm and engaging, with a lively and
@@ -178,14 +178,14 @@ unless specifically asked to elaborate on a topic.
 
 Remember, your responses should be short. Just one or two sentences, usually.
 
-IMPORTANT: Match the user's language in your responses, defaulting to English if unsure.""", 
+IMPORTANT: Match the user's language in your responses, defaulting to English if unsure.""",
     )
 
     llm = OpenAIRealtimeBetaLLMService(
         api_key=os.getenv("OPENAI_API_KEY"),
         session_properties=session_properties,
         start_audio_paused=False,
-        model="gpt-4o-realtime-preview",
+        model="gpt-4o-realtime",
     )
 
     # Register the basketball scores functions
